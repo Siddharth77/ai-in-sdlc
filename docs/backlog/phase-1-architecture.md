@@ -43,7 +43,8 @@ Goal: show what the code does today, with evidence, then what the target state a
 - Acceptance criteria:
   - [x] Separate list of everything the agent inferred without a citation.
   - [x] Each inference marked confirmed, corrected or removed. (Result column in `inferred-items.md`; I7 is marked not confirmed, I8 partly.)
-  - [x] Corrections the human made are listed. (Section C lists the two diagram corrections; the human's own corrections are not itemised.)
+  - [x] Human decisions for I1 to I8 and F1 to F10 are listed in the decision record. (Section D in `inferred-items.md`.)
+  - [x] Corrections the human made are listed. (Section C lists the two diagram corrections.)
 - Human gate: [x] Human signs off the list — Siddharth Jain, 2026-10-31 (stated in chat)
 - Evidence: `docs/diagrams/inferred-items.md`
 

@@ -39,7 +39,7 @@ Caveats a reviewer should challenge:
 2. Number 2 counts CI failures caught before merge. That is a quality-gate signal, not production failures, so it can be high while change failure rate is zero, or the reverse. Treat it as a proxy only.
 3. 20 runs and 2 failures give a very wide interval (the 95 percent Wilson interval for 2 of 20 is roughly 3 to 30 percent). The fixture cannot support a claim that the rate is 10 percent, only that failures occurred.
 4. Run 6 failed before the end-to-end step (19 of 20 runs contain it), so failed-run durations are shorter than a full run. Successful runs only: mean 1,893 s over 18 runs.
-5. Repository facts from git on the same run: 7 commits between 2026-10-05 and 2026-10-31, 0 tags, so there is nothing to compute release cadence from.
+5. Repository facts from git (re-captured 2026-10-31): `main` has 6 commits (`git rev-list --count main`, 2026-10-05 to 2026-10-12). The capture script's `repository.commits` counts the checked-out branch, `feat/prod-ai-in-sdlc` (13 commits at the last capture), so that field grows as work continues and is not the `main` figure. 0 tags, so there is nothing to compute release cadence from. The CI figures in the table above do not depend on git and were identical on every re-run.
 
 ## Reproduce the no-data findings
 

@@ -1,4 +1,4 @@
-# Risk audit: agent setup vs the lethal trifecta (DRAFT for human decision)
+# Risk audit: agent setup vs the lethal trifecta (reviewed; Option A application pending)
 
 Date: 2026-10-31. Author: AI draft for P5-S1 and P5-S2. The decision section and
 "Where the agent was wrong or useless" are human-authored per
@@ -122,10 +122,53 @@ Decision owner: Siddharth Jain  Date: 2026-10-31  (P5-S3 gate; Option A chosen, 
 
 ## Where the agent was wrong or useless
 
-(Human-authored section — left blank for the human per the evidence rules.)
+> Errors recorded in this session. Every item below happened and is traceable. Reviewed and accepted as correct by Siddharth Jain, 2026-10-31.
+
+**Wrong (caught and fixed):**
+
+1. **Claimed a file existed that did not.** An earlier session summary said
+   `docs/policies/risk-audit.md` already existed, with a non-standard trifecta
+   definition. It did not exist on disk. Caught when the file was looked up;
+   the audit was written fresh against the repo's own definition in
+   `.github/agents/risk-reviewer.agent.md`. Logged in
+   `docs/ai-logs/2026-10-31-p5-risk-audit.md`. Lesson: a summary is not
+   evidence; check the file system before relying on a claim about it.
+2. **Wrong commit count in the measurement plan.** Caveat 5 said "7 commits".
+   `git rev-list --count main` gives 6. The capture script counts the
+   checked-out branch (13 at the time), so the number was neither. Found by
+   re-running the commands and corrected in
+   `docs/policies/measurement-plan.md`.
+3. **Inaccurate log entry.** The AI log said "Some code changed" when only
+   documentation changed. Corrected.
+4. **Stale text left behind.** After the eval runs were finalised, the report
+   header ("kimi-k3, 48 rows") and the evals README ("48 blank rows") were
+   not updated. Still open at the time of writing.
+5. **Stated a cause as fact.** The plan and log say the first CI run was
+   missed because the workflow was not yet registered when the PR opened. The
+   evidence is that the workflows API went from 0 to 1 and a run appeared
+   after a push; the ordering was inferred, not observed.
+
+**Useless or unable:**
+
+- **Could not produce the audit target.** `ops/README.md` has no agent-setup
+  section. The agent could not recover it and documented an assumption
+  instead; only the facilitator or the human can supply the real setup.
+- **Could not act on shared state.** The agent cannot push, open the PR or
+  change the hook rules, because those are ask-gated. It diagnosed why CI
+  had no runs but the human had to do the fixing steps. This is the intended
+  control, but it means the agent alone could not have captured the real CI
+  run.
+- **Fixture data.** The agent could compute the 20-run proxies, but they come
+  from an invented file, so they say nothing about real delivery performance.
+  The only real CI number (n = 1) is too small to use.
+- **Did not make the risk decision.** Choosing Option A, the owner and the
+  date were the human's. The agent supplied options and a cost/value note
+  only.
 
 ## Open items for the human
 
+- Done: "Where the agent was wrong or useless" reviewed and accepted by
+  Siddharth Jain, 2026-10-31.
 - Confirm or replace the audited-setup assumption above (P5-S1 gate).
 - Option A chosen by Siddharth Jain on 2026-10-31 (P5-S3). Remaining: apply the
   hook and MCP changes (ask-gated, human-run), then re-run this audit's leg 3

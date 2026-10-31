@@ -47,13 +47,13 @@
 - Evidence: `docs/policies/measurement-plan.md`
 
 ### P5-S5 — Capture the two baselines available today
-- Status: In Review
+- Status: Done
 - Source: Requirement §5 (from the repository and its CI history)
 - Agent: none (human runs queries), agent may assist
 - Depends on: P5-S4
 - Acceptance criteria:
   - [x] Two metrics captured with the exact command and date. Candidates: lead time from `git log` timestamps, CI failure rate from workflow runs in `.github/workflows/ci.yml`. (`node docs/measurement/capture-baseline.mjs`, output in `docs/measurement/baseline-2026-10-31.json`.)
-  - [x] If the repository has no workflow runs or PRs, say so and report that metric as not capturable instead of using `ops/` figures as real production data. (GitHub API returned 0 runs and 0 PRs on 2026-10-31; recorded in the plan.)
-  - [x] Sample size stated next to each number. (20 runs, 378 step rows, 2 failures.)
-- Human gate: [ ] Human re-runs the commands and gets the same numbers — name/date:
+  - [x] If the repository has no workflow runs or PRs, say so and report that metric as not capturable instead of using `ops/` figures as real production data. (GitHub API returned 0 runs and 0 PRs on 2026-10-31 at first query; later the same day PR #1 and one real CI run appeared. Review turnaround and deployment-based metrics remain not capturable: 0 reviews, 0 deployments. Recorded in the plan.)
+  - [x] Sample size stated next to each number. (Fixture: 20 runs, 378 step rows, 2 failures. Real CI: 1 run, success, 17 s, raw data in `docs/measurement/ci-runs-2026-10-31.json`.)
+- Human gate: [x] Human re-runs the commands and gets the same numbers — Siddharth Jain, 2026-10-31 (review confirmed by the human; agent re-ran the capture twice the same day with identical CI figures)
 - Evidence: command output in the measurement plan

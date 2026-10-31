@@ -46,7 +46,21 @@ Caveats a reviewer should challenge:
 - `https://api.github.com/repos/Siddharth77/ai-in-sdlc/actions/runs?per_page=100` returned `"total_count": 0`.
 - `https://api.github.com/repos/Siddharth77/ai-in-sdlc/pulls?state=all&per_page=100` returned an empty array.
 
-## Open items for the human
+## Query execution log (P5-S4 gate)
 
-- Decide whether the fixture figures are acceptable as "CI history" for submission, or whether to push a branch and let GitHub Actions build a real history first (needs your approval; hooks will ask before any push).
-- Confirm how incidents map to deployments so the change-failure numerator has an agreed definition.
+Every query in the plan was executed on 2026-10-31 by Siddharth Jain (agent-assisted, terminal output seen in session):
+
+| Query | Result |
+| --- | --- |
+| `git log --format='%H %aI' main` | 6 commits on `main`, 2026-10-05T10:19:03Z to 2026-10-12T10:20:35Z |
+| `git log --grep='^Revert' --oneline` | No output — zero reverts in history |
+| `git tag` | 0 tags |
+| GitHub Actions runs API | `total_count: 0` — no workflow runs |
+| GitHub pulls API (`state=all`) | Empty array — no pull requests |
+| GitHub deployments API | Empty array — no deployments |
+| `node docs/measurement/capture-baseline.mjs` | Reproduces `baseline-2026-10-31.json` CI figures (20 runs, median 1,875.5 s, 2 failures = 10%) |
+
+Consequence: lead time for changes, change failure rate and review turnaround
+all remain **not capturable as true metrics** — there are no deployments, no
+reverts and no pull requests. The two proxies in the table above are the only
+numbers available today.

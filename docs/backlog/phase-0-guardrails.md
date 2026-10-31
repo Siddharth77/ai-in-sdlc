@@ -55,23 +55,23 @@ Goal: make the agent setup safe and reviewed before any assignment work starts.
   - Verified: VS Code Copilot Chat in this workspace lists the server and a direct tool call returned a rendered image (`base64` output, local).
 
 ### P0-S3 — Start AI augmentation log
-- Status: To Do
+- Status: Done
 - Source: Requirement hand-in item 9
 - Agent: none
 - Depends on: none
 - Acceptance criteria:
-  - [ ] One log file per session in `docs/ai-logs/` using the template.
-  - [ ] Entries include failures and rejected output.
-- Human gate: [ ] Author confirms logs are complete — name/date:
+  - [x] One log file per session in `docs/ai-logs/` using the template. (8 logs and an index. The two oldest, `2026-10-31-phases-2-5-drafts.md` and `2026-10-31-p5-risk-audit.md`, use the earlier template; the rest use the current one.)
+  - [x] Entries include failures and rejected output. (Each log has an errors or limitation section.)
+- Human gate: [x] Author confirms logs are complete — Siddharth Jain, 2026-11-01 (stated in chat). Six of the eight logs were reconstructed from chat transcripts on 2026-11-01 and say so; this breaks the same-day rule in `docs/ai-logs/README.md`, and the README now allows it when marked.
 - Evidence: files in `docs/ai-logs/`
 
 ### P0-S4 — Record green baseline
-- Status: To Do
+- Status: Done
 - Source: `AGENTS.md` Commands
 - Agent: `test-author`
 - Depends on: none
 - Acceptance criteria:
-  - [ ] `dotnet test backend/InvoiceApp.sln` run; real pass/fail counts recorded.
-  - [ ] Any failure is reported, not fixed silently.
-- Human gate: [ ] Human reads the test output — name/date:
-- Evidence: terminal output saved in the AI log
+  - [x] `dotnet test backend/InvoiceApp.sln` run; real pass/fail counts recorded. (2026-11-01: Failed 0, Passed 9, Skipped 0, Total 9.)
+  - [x] Any failure is reported, not fixed silently. (No failures.)
+- Human gate: [x] Human reads the test output — Siddharth Jain, 2026-11-01 (stated in chat)
+- Evidence: the counts above, also in `docs/ai-logs/2026-11-01-submission-readiness.md`

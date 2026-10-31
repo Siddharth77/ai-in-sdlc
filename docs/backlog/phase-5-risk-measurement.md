@@ -31,7 +31,7 @@
   - [x] Either a redesign that removes at least one leg, or a written acceptance. (Option A chosen: remove leg 3 — read-only GitKraken MCP plus egress ask-rule.)
   - [x] Acceptance includes the trigger that makes us revisit. (Five triggers in `docs/policies/risk-audit.md`.)
   - [x] Decision recorded with owner and date. (Siddharth Jain, 2026-10-31.)
-- Human gate: [x] Named risk owner signs — Siddharth Jain, 2026-10-31 (decision signed; applying the Option A hook and MCP changes is follow-up work tracked in the audit's open items)
+- Human gate: [x] Named risk owner signs — Siddharth Jain, 2026-10-31 (decision signed; Option A applied in the hook 2026-11-01; switching off the MCP write tools in the editor is a manual step tracked in the audit's open items)
 - Evidence: audit decision section
 
 ### P5-S4 — Measurement plan

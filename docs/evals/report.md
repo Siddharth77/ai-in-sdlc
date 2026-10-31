@@ -1,9 +1,11 @@
 # Review evaluation report
 
-Date: 2026-10-31. Model under test: kimi-k3 (GitHub Copilot). Runs executed by
-spawning one fresh, stateless review session per case with only the prompt file
-and one diff — no repo access, no earlier cases. 48 rows in `results.csv`,
-scored with `node docs/evals/score.mjs`.
+Date: 2026-10-31. Models under test: kimi-k3, grok-4.7 and claude (GitHub
+Copilot), 12 runs in total. The first section below is the kimi-k3 runs 1-4;
+grok-4.7 (runs 5-8) and claude (runs 9-12) follow. Runs executed by spawning one
+fresh, stateless review session per case with only the prompt file and one diff
+— no repo access, no earlier cases. 144 rows in `results.csv` (12 cases x 12
+runs), scored with `node docs/evals/score.mjs`.
 
 ## Results
 
@@ -58,9 +60,10 @@ it down.
 2. **case-09 was reviewed and kept as a defect label.** The README claim was
    checked against `AuthController.Logout` and the sign-out flow, and the
    defect label remained valid after human review.
-3. **Raw replies** are not saved under `docs/evals/raw/`; they are in the
-   session transcript of the run (48 fresh subagent sessions). If the team
-   wants re-checkable artefacts on disk, re-run with replies saved per row.
+3. **Raw replies** for runs 1 to 12 were not saved and cannot be recovered
+   (the transcripts record only that each session succeeded). Only the scored
+   summary, notes and verdict per row are kept. See `docs/evals/raw/README.md`.
+   A re-run with replies saved would be a new, separately labelled run.
 4. **Model rotation is complete.** All three models were run under the same
    protocol and the results are recorded in `results.csv`.
 
@@ -185,7 +188,7 @@ harm.
   doubts) and was scored clean_ok. That one call changes the v1 false-alarm
   rate from 4/9 to 5/9, which shows how fragile the scoring is.
 - **case-09 run 12** called the false README reset claim "not a code defect".
-  The label for case-09 is contested.
+  The label for case-09 was confirmed as a defect on human review.
 - **case-11** was caught in every run but only at 35 to 50% reported
   confidence.
 

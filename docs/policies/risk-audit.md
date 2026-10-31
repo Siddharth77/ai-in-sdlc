@@ -1,4 +1,4 @@
-# Risk audit: agent setup vs the lethal trifecta (reviewed; Option A application pending)
+# Risk audit: agent setup vs the lethal trifecta (reviewed; Option A applied in the hook)
 
 Date: 2026-10-31. Author: AI draft for P5-S1 and P5-S2. The decision section and
 "Where the agent was wrong or useless" are human-authored per
@@ -105,7 +105,17 @@ owner and date are for the human (P5-S3).
   session. Value: high in principle, but the ongoing cost makes it the weakest
   fit for the low-cost preference.
 
-### Interim risk acceptance (until the human picks an option and it is applied)
+### Option A as applied (2026-11-01)
+
+Applied in `.github/hooks/scripts/pre-tool-guard.mjs`, at the author's request:
+
+- Any `curl` or `wget` command now asks a human (a piped download into a shell stays denied).
+- The MCP write tools `issues_create`, `issues_add_comment`, `pull_request_create`, `pull_request_create_review` and `git_push` now ask a human. They are matched by tool name, because they are not shell commands.
+- Evidence: `node .github/hooks/smoke-test.mjs` gives 17 of 17 passing, including 4 new egress cases and 1 read-only MCP case that stays silent. The smoke test feeds simulated payloads. It does not prove that the live editor reports MCP tool names in this form, so the first real MCP write call should be watched for the prompt.
+
+What this does and does not do. Leg 3 is now gated by a human, not removed: an approved call still sends data out. The GitKraken MCP server is configured in the user's editor settings, outside this repository (`.mcp.json` holds only `playwright` and `mermaid`), so it could not be scoped to read-only from here. The remaining manual step, for Siddharth Jain: in the editor's tool picker, switch off the five write tools above so the agent cannot call them at all. Until then the gate is the hook. Not covered: other egress tools such as `scp`, `nc` or `ftp`, and local MCP git tools (`git_commit`) that bypass the terminal `git commit` ask rule.
+
+### Interim risk acceptance (residual risk after Option A)
 
 Risk accepted: the agent runs with all three legs present in a workspace that
 contains no real private data, with human approval gates on git, installs,
@@ -118,7 +128,7 @@ config, auth, Domain and CI changes.
 4. A suspected prompt injection via remote content (issue, PR, web page).
 5. The MCP tool set changes (new write-capable tools appear).
 
-Decision owner: Siddharth Jain  Date: 2026-10-31  (P5-S3 gate; Option A chosen, application pending)
+Decision owner: Siddharth Jain  Date: 2026-10-31  (P5-S3 gate; Option A chosen 2026-10-31, applied in the hook 2026-11-01)
 
 ## Where the agent was wrong or useless
 
@@ -142,7 +152,8 @@ Decision owner: Siddharth Jain  Date: 2026-10-31  (P5-S3 gate; Option A chosen, 
    documentation changed. Corrected.
 4. **Stale text left behind.** After the eval runs were finalised, the report
    header ("kimi-k3, 48 rows") and the evals README ("48 blank rows") were
-   not updated. Still open at the time of writing.
+   not updated. Fixed on 2026-11-01 (see `docs/evals/report.md` and the
+   evals README).
 5. **Stated a cause as fact.** The plan and log say the first CI run was
    missed because the workflow was not yet registered when the PR opened. The
    evidence is that the workflows API went from 0 to 1 and a run appeared
@@ -170,6 +181,7 @@ Decision owner: Siddharth Jain  Date: 2026-10-31  (P5-S3 gate; Option A chosen, 
 - Done: "Where the agent was wrong or useless" reviewed and accepted by
   Siddharth Jain, 2026-10-31.
 - Confirm or replace the audited-setup assumption above (P5-S1 gate).
-- Option A chosen by Siddharth Jain on 2026-10-31 (P5-S3). Remaining: apply the
-  hook and MCP changes (ask-gated, human-run), then re-run this audit's leg 3
-  checks.
+- Option A chosen by Siddharth Jain on 2026-10-31 (P5-S3) and applied in the
+  hook on 2026-11-01 (17 of 17 smoke tests). Remaining: switch off the five MCP
+  write tools in the editor's tool picker (outside this repo), then watch the
+  first real MCP write call for the approval prompt.

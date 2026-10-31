@@ -62,6 +62,19 @@ Raw output saved in [ci-runs-2026-10-31.json](../measurement/ci-runs-2026-10-31.
 
 This is real data from the live repository and is the first genuine CI measurement. It is not comparable to the fixture proxies above: the real workflow runs build and test only on a small solution, while the fixture's roughly 31 minute runs include an end-to-end step and are invented. With n = 1 no rate or percentile is meaningful. Re-capture as runs accumulate, and report median and 90th percentile only once there are enough runs to support them.
 
+## Re-capture on 2026-11-01
+
+Commands: `node docs/measurement/capture-baseline.mjs` and `gh run list --limit 100 --json databaseId,event,headBranch,status,conclusion,createdAt,updatedAt,workflowName`. Raw output saved in [baseline-2026-11-01.json](../measurement/baseline-2026-11-01.json) and [ci-runs-2026-11-01.json](../measurement/ci-runs-2026-11-01.json).
+
+| Number | 2026-10-31 | 2026-11-01 |
+| --- | --- | --- |
+| Fixture CI (20 runs): median, failures | 1,875.5 s, 2 of 20 | 1,875.5 s, 2 of 20 (identical: the fixture does not change) |
+| Real CI runs | 1 (run 41227216780, success, 17 s) | 2, both success, both on `pull_request`: 41227216780 (17 s) and 41228762027 (23 s, 18:18:31Z to 18:18:54Z) |
+| Commits on the checked-out branch | 13 | 15 (grows with work; `main` is still 6) |
+| Deployments, reviews, tags | 0, 0, 0 | not re-queried |
+
+With n = 2 and no failures, no rate or percentile is meaningful. Today's edits are not committed, so they have not started another CI run; the commit and push will add one.
+
 ## Reproduce the no-data findings
 
 First query, 2026-10-31, before PR #1 existed:

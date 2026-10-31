@@ -1,6 +1,6 @@
-# As-built citations (DRAFT, awaiting human spot-check)
+# As-built citations (human gates recorded)
 
-Status: agent draft. Nothing here is approved until the human gates at the bottom are ticked.
+Status: Human gates P1-S1 to P1-S3 are recorded as signed in `docs/backlog/phase-1-architecture.md` (Siddharth Jain, 2026-10-31, stated in chat). The rendered SVGs in `rendered/` were re-rendered on 2026-11-01 with `node docs/diagrams/render.mjs` and now include the two label corrections in `inferred-items.md` section C (checked: the `mw` to `authc` edge label is in the SVG).
 Scope: code only. Nothing from `ops/` is used (it describes a planned deployment). Line numbers are from the tree at the time of writing; re-check after any edit.
 Diagram sources: [as-built-container.mmd](as-built-container.mmd), [as-built-approval-sequence.mmd](as-built-approval-sequence.mmd).
 
@@ -57,6 +57,6 @@ No database, no Azure SQL client, no Service Bus client, no PayEx client, no out
 
 ## Human gates (P1-S1, P1-S2, P1-S3)
 
-- [ ] Spot-check at least five rows above against the code. Name/date:
-- [ ] Walk the sequence diagram against the code, start to finish. Name/date:
-- [ ] Correct any wrong element in the `.mmd` files. Name/date:
+- [x] Spot-check at least five rows above against the code. Siddharth Jain, 2026-10-31 (per P1-S1 in the backlog).
+- [x] Walk the sequence diagram against the code, start to finish. Siddharth Jain, 2026-10-31 (per P1-S3 in the backlog).
+- [x] Correct any wrong element in the `.mmd` files. Siddharth Jain, 2026-10-31 (per P1-S2; corrections listed in `inferred-items.md` section C).

@@ -45,6 +45,16 @@ const ASK_COMMANDS = [
   [/\bdotnet\s+(add\s+package|nuget|publish|ef)\b/i, 'dotnet dependency, publish or database command'],
   [/\bpip3?\s+install\b/i, 'package install'],
   [/\b(az|kubectl|terraform|helm|gh)\s/i, 'cloud, cluster or GitHub CLI command'],
+  [/\b(curl|wget)\b/i, 'network request that can send data out (risk audit option A)'],
+];
+
+// MCP tools that send data to a remote service. They are not shell commands or file edits, so the rules
+// below never see them; they are matched by tool name instead (risk audit option A, docs/policies/risk-audit.md).
+const ASK_TOOLS = [
+  [
+    /gitkraken.*(issues_create|issues_add_comment|pull_request_create|pull_request_create_review|git_push)$/i,
+    'MCP tool that sends data to GitHub or a remote',
+  ],
 ];
 
 const DENY_PATHS = [
@@ -66,6 +76,10 @@ const ASK_PATHS = [
 ];
 
 const matchPath = (rules, relativePath) => rules.find(([pattern]) => pattern.test(relativePath));
+
+// 0. MCP tools that send data out
+const askedTool = ASK_TOOLS.find(([pattern]) => pattern.test(toolName));
+if (askedTool) respond('ask', `Manual approval required: ${askedTool[1]}.`);
 
 // 1. Terminal commands
 const command = typeof toolInput.command === 'string' ? toolInput.command : '';

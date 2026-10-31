@@ -12,7 +12,7 @@ Status: harness ready and reviewed by a human. `results.csv` contains the final 
 | `labels.csv` | Ground truth per case. Final labels are human-reviewed and marked `confirmed` |
 | `prompts/review-v1.md` | Baseline prompt, verbatim from `ops/evals/README.md` |
 | `prompts/review-v2.md` | The one changed variable (prompt) |
-| `results.csv` | 48 blank rows: runs 1 to 3 on v1, run 4 on v2, 12 cases each |
+| `results.csv` | 144 scored rows: 12 runs (3 models x runs on v1 and one on v2), 12 cases each |
 | `score.mjs` | Computes caught, missed, false alarm per run and pooled, with 95 percent Wilson intervals |
 
 ## Human review status
@@ -26,7 +26,7 @@ Status: harness ready and reviewed by a human. `results.csv` contains the final 
 
 1. Fresh session for each case. Give it only the prompt file and one diff. No repo access, no earlier cases.
 2. Runs 1 to 3: `prompts/review-v1.md`. Run 4: `prompts/review-v2.md`. Same model, same cases, same scoring.
-3. Save the raw reply for each row (for example under `docs/evals/raw/run-N/case-NN.txt`) so scores can be re-checked.
+3. Save the raw reply for each row under `docs/evals/raw/run-N/case-NN.txt` so scores can be re-checked. Runs 1 to 12 were not saved; see `raw/README.md`.
 4. Score each row strictly using the rule in `ops/evals/README.md`: caught only if the finding names the actual defect. Fill `verdict`:
    - defect case: `caught` or `missed`
    - clean case: `false_alarm` or `clean_ok`

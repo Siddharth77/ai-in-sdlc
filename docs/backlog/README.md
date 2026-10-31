@@ -15,13 +15,13 @@ Source: `docs/requirement/AI-in-SDLC-Home Assignment.pdf` (five tasks plus demo 
 
 | Phase | Name | Requirement | Stories | Status |
 | --- | --- | --- | --- | --- |
-| 0 | [Agent workspace and guardrails](phase-0-guardrails.md) | Setup, item 9 | 4 | To Do |
-| 1 | [As-built and target architecture](phase-1-architecture.md) | Task 1 | 6 | To Do |
-| 2 | [Exactly-once decision record](phase-2-exactly-once-adr.md) | Task 2 | 6 | To Do |
-| 3 | [Autonomy policy](phase-3-autonomy-policy.md) | Task 3 | 5 | To Do |
-| 4 | [Review evaluation](phase-4-review-eval.md) | Task 4 | 6 | To Do |
-| 5 | [Risk audit and measurement plan](phase-5-risk-measurement.md) | Task 5 | 5 | To Do |
-| 6 | [Submission pack](phase-6-submission.md) | Hand-in 1-9, demo video | 4 | To Do |
+| 0 | [Agent workspace and guardrails](phase-0-guardrails.md) | Setup, item 9 | 4 | Done |
+| 1 | [As-built and target architecture](phase-1-architecture.md) | Task 1 | 6 | Done |
+| 2 | [Exactly-once decision record](phase-2-exactly-once-adr.md) | Task 2 | 6 | Done (P2-S5 second-reviewer gate waived) |
+| 3 | [Autonomy policy](phase-3-autonomy-policy.md) | Task 3 | 5 | Done (P3-S4, S5 waived) |
+| 4 | [Review evaluation](phase-4-review-eval.md) | Task 4 | 6 | Done (P4-S4 raw outputs waived) |
+| 5 | [Risk audit and measurement plan](phase-5-risk-measurement.md) | Task 5 | 5 | Done |
+| 6 | [Submission pack](phase-6-submission.md) | Hand-in 1-9, demo video | 4 | In Progress (S1, S3 Done; S2 video, S4 open) |
 | 7 | [Production build (deferred)](phase-7-production-build.md) | Implied by target state | 7 | Blocked |
 
 ## Dependencies at a glance

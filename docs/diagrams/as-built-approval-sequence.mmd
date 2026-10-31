@@ -1,0 +1,69 @@
+%% AS-BUILT approval path: Submit, then Approve or Reject. DRAFT: hand-written source, rendered with mcp-mermaid 0.4.1 (generate_mermaid_diagram).
+%% Notes cite file:line. Citation table and inferred list: as-built-citations.md.
+sequenceDiagram
+  autonumber
+  actor Person as Approver or Admin
+  participant UI as Web UI (app.js)
+  participant MW as SessionAuthMiddleware
+  participant SS as SessionStore
+  participant RR as RequireRoleAttribute
+  participant AU as AuthController
+  participant IC as InvoicesController
+  participant AC as ApprovalsController
+  participant SV as ApprovalService
+  participant RP as InMemoryInvoiceRepository
+
+  Note over Person,RP: Sign-in (AuthController.cs:23-36)
+  Person->>UI: username and password
+  UI->>MW: POST /api/auth/login
+  Note right of MW: SessionAuthMiddleware.cs:19 skips the token check for login
+  MW->>AU: pass through to AuthController
+  AU->>SS: Create(UserSession) after matching appsettings Users (AuthController.cs:26-34)
+  AU-->>UI: token (16 random bytes as hex) stored in sessionStorage (SessionStore.cs:13, app.js:108)
+
+  Note over Person,RP: Submit a draft (InvoicesController.cs:69-70, no role required)
+  Person->>UI: Submit on a Draft row (app.js:52)
+  UI->>MW: POST /api/invoices/{id}/submit with Bearer token
+  MW->>SS: Get(token) (SessionAuthMiddleware.cs:25)
+  SS-->>MW: UserSession
+  MW->>IC: next(context) with the session in HttpContext.Items (SessionAuthMiddleware.cs:33), no RequireRole on Submit
+  IC->>SV: Submit(id) through Handle (InvoicesController.cs:70)
+  SV->>RP: GetById(id)
+  RP-->>SV: the stored Invoice instance (InMemoryInvoiceRepository.cs:27)
+  Note right of SV: ApprovalService.cs:20 only Draft may be submitted, else 409
+  SV->>RP: Update(invoice) status PendingApproval (ApprovalService.cs:26-27)
+  SV-->>IC: Invoice
+  IC-->>UI: 200 with the Invoice JSON (ApiControllerBase.cs:13)
+
+  Note over Person,RP: Decide a pending invoice (ApprovalsController.cs:21-27)
+  Person->>UI: Approve or Reject (app.js:72-73)
+  UI->>MW: POST /api/approvals/{id}/approve or /reject with Bearer token
+  MW->>SS: Get(token)
+  alt token missing or unknown
+    MW-->>UI: 401 (SessionAuthMiddleware.cs:27-30)
+  else session found
+    MW->>RR: next(context): MVC runs the filter before the action, it reads the session from HttpContext.Items (SessionAuthMiddleware.cs:33, RequireRoleAttribute.cs:19)
+    alt role is not Approver or Admin
+      RR-->>UI: 403 (RequireRoleAttribute.cs:21-24)
+    else role allowed
+      RR->>AC: action runs
+      AC->>SV: Approve(id, username) or Reject(id, username, reason) through Handle
+      opt Reject with a blank reason
+        SV-->>AC: ArgumentException, mapped to 400 (ApprovalService.cs:45-48)
+      end
+      SV->>RP: GetById(id)
+      alt invoice not found
+        SV-->>AC: KeyNotFoundException, mapped to 404 (ApprovalService.cs:61-63)
+      else found
+        alt status is not PendingApproval
+          SV-->>AC: InvalidOperationException, mapped to 409 (ApprovalService.cs:65-71)
+        else pending
+          Note right of SV: Status check and mutation are not atomic, see flag F1
+          SV->>SV: set Status, DecidedBy, DecidedAt (and DecisionNote on reject) (ApprovalService.cs:36-39, 53-56)
+          SV->>RP: Update(invoice) under the repository lock (InMemoryInvoiceRepository.cs:50-57)
+          SV-->>AC: Invoice
+          AC-->>UI: 200 with the Invoice JSON (ApiControllerBase.cs:13)
+        end
+      end
+    end
+  end

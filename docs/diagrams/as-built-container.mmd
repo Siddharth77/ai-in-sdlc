@@ -1,0 +1,57 @@
+%% AS-BUILT container view. Only what exists in code today. DRAFT: hand-written source, rendered with mcp-mermaid 0.4.1 (generate_mermaid_diagram).
+%% Every node cites a file. Line numbers and the inferred list are in as-built-citations.md (IDs C0 to C17).
+%% There is no database, no message topic and no payment provider in the code, so none appear here.
+flowchart LR
+  user(["C0 Approver or Admin<br/>demo users: appsettings.json:9-12"])
+
+  subgraph browser["Browser"]
+    ui["C1 Web UI<br/>wwwroot/index.html, app.js, styles.css"]
+    store[("C2 sessionStorage<br/>wwwroot/app.js:4, 108")]
+  end
+
+  subgraph api["InvoiceApp.Api - one ASP.NET Core 8 process - Program.cs"]
+    staticFiles["C3 Static files<br/>Program.cs:19-20"]
+    mw["C4 SessionAuthMiddleware<br/>Auth/SessionAuthMiddleware.cs"]
+    sessions[("C5 SessionStore, in memory<br/>Auth/SessionStore.cs")]
+    users["C6 Demo users config<br/>appsettings.json, Auth/UserSession.cs DemoUsersOptions"]
+    authc["C7 AuthController<br/>Controllers/AuthController.cs"]
+    invc["C8 InvoicesController<br/>Controllers/InvoicesController.cs"]
+    appc["C9 ApprovalsController<br/>Controllers/ApprovalsController.cs"]
+    handle["C10 ApiControllerBase.Handle<br/>Controllers/ApiControllerBase.cs:9"]
+    role["C11 RequireRoleAttribute<br/>Auth/RequireRoleAttribute.cs"]
+    repo[("C12 InMemoryInvoiceRepository<br/>InMemoryInvoiceRepository.cs")]
+  end
+
+  subgraph domain["InvoiceApp.Domain - class library"]
+    svc["C13 ApprovalService<br/>Domain/ApprovalService.cs"]
+    port["C14 IInvoiceRepository<br/>Domain/IInvoiceRepository.cs"]
+    model["C15 Invoice and InvoiceStatus<br/>Domain/Invoice.cs, InvoiceStatus.cs"]
+    discount["C16 DiscountCalculator<br/>Domain/DiscountCalculator.cs - no callers found"]
+  end
+
+  tests["C17 InvoiceApp.Tests - references Domain only<br/>tests/InvoiceApp.Tests/InvoiceApp.Tests.csproj"]
+
+  user --> ui
+  ui --- store
+  ui -->|"GET / static files"| staticFiles
+  ui -->|"HTTP JSON, Bearer token, /api/*<br/>app.js:15-26"| mw
+  mw -->|"Get token"| sessions
+  mw -->|"request passes through, login skips the token check (SessionAuthMiddleware.cs:19)"| authc
+  mw -->|"session in HttpContext.Items"| invc
+  mw -->|"session in HttpContext.Items"| appc
+  authc -->|"match username and password"| users
+  authc -->|"Create or Remove token"| sessions
+  invc -.->|"Delete only: Admin"| role
+  appc -.->|"class level: Approver, Admin"| role
+  invc --> handle
+  appc --> handle
+  invc -->|"Submit"| svc
+  appc -->|"Approve, Reject"| svc
+  invc -->|"list, get, create, delete"| port
+  svc -->|"GetById, Update"| port
+  repo -.->|"implements, registered Program.cs:14"| port
+  svc --- model
+  tests -.->|"unit tests with FakeInvoiceRepository"| svc
+
+  classDef inferred stroke-dasharray: 4 3
+  class discount inferred

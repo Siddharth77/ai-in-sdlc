@@ -1,0 +1,64 @@
+diff --git a/backend/src/InvoiceApp.Domain/ApprovalService.cs b/backend/src/InvoiceApp.Domain/ApprovalService.cs
+--- a/backend/src/InvoiceApp.Domain/ApprovalService.cs
++++ b/backend/src/InvoiceApp.Domain/ApprovalService.cs
+@@ -58,6 +58,20 @@ public class ApprovalService
+         return invoice;
+     }
+
++    public Invoice Discard(string invoiceId)
++    {
++        var invoice = Find(invoiceId);
++
++        if (invoice.Status != InvoiceStatus.Draft)
++        {
++            throw new InvalidOperationException(
++                $"Invoice {invoiceId} is {invoice.Status}; only drafts can be discarded.");
++        }
++
++        _repository.Remove(invoiceId);
++        return invoice;
++    }
++
+     private Invoice Find(string invoiceId) =>
+         _repository.GetById(invoiceId)
+         ?? throw new KeyNotFoundException($"Invoice {invoiceId} was not found.");
+diff --git a/backend/src/InvoiceApp.Api/Controllers/InvoicesController.cs b/backend/src/InvoiceApp.Api/Controllers/InvoicesController.cs
+--- a/backend/src/InvoiceApp.Api/Controllers/InvoicesController.cs
++++ b/backend/src/InvoiceApp.Api/Controllers/InvoicesController.cs
+@@ -68,7 +68,6 @@ public class InvoicesController : ApiControllerBase
+     [HttpDelete("{id}")]
+     [RequireRole("Admin")]
+-    public IActionResult Delete(string id) =>
+-        _repository.Remove(id) ? NoContent() : NotFound();
++    public ActionResult<Invoice> Delete(string id) => Handle(() => _approvals.Discard(id));
+ }
+diff --git a/backend/tests/InvoiceApp.Tests/ApprovalServiceTests.cs b/backend/tests/InvoiceApp.Tests/ApprovalServiceTests.cs
+--- a/backend/tests/InvoiceApp.Tests/ApprovalServiceTests.cs
++++ b/backend/tests/InvoiceApp.Tests/ApprovalServiceTests.cs
+@@ -88,4 +88,28 @@ public class ApprovalServiceTests
+         Assert.Throws<KeyNotFoundException>(() => service.Approve("INV-nope", "nitin"));
+     }
++
++    [Fact]
++    public void Discard_DraftInvoice_RemovesIt()
++    {
++        var repository = new FakeInvoiceRepository();
++        repository.Add(new Invoice { Id = "INV-910", CustomerName = "Acme", Amount = 50m });
++        var service = new ApprovalService(repository);
++
++        service.Discard("INV-910");
++
++        Assert.Null(repository.GetById("INV-910"));
++    }
++
++    [Fact]
++    public void Discard_PendingInvoice_ThrowsAndKeepsIt()
++    {
++        var repository = new FakeInvoiceRepository();
++        repository.Add(Pending("INV-911"));
++        var service = new ApprovalService(repository);
++
++        Assert.Throws<InvalidOperationException>(() => service.Discard("INV-911"));
++        Assert.NotNull(repository.GetById("INV-911"));
++    }
+ }

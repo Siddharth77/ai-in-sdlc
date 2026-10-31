@@ -1,0 +1,28 @@
+diff --git a/backend/src/InvoiceApp.Api/Controllers/InvoicesController.cs b/backend/src/InvoiceApp.Api/Controllers/InvoicesController.cs
+--- a/backend/src/InvoiceApp.Api/Controllers/InvoicesController.cs
++++ b/backend/src/InvoiceApp.Api/Controllers/InvoicesController.cs
+@@ -16,10 +16,12 @@ public class InvoicesController : ApiControllerBase
+     }
+
+     public record CreateInvoiceRequest(string CustomerName, decimal Amount);
++    public record InvoiceSummary(string Id, string CustomerName, decimal Amount, InvoiceStatus Status, DateTime CreatedAt);
+
+     [HttpGet]
+-    public ActionResult<IReadOnlyList<Invoice>> GetAll([FromQuery] string? status)
++    public ActionResult<IReadOnlyList<InvoiceSummary>> GetAll([FromQuery] string? status)
+     {
+         var invoices = _repository.GetAll();
+
+         if (!string.IsNullOrEmpty(status))
+@@ -31,7 +33,11 @@ public class InvoicesController : ApiControllerBase
+             invoices = invoices.Where(i => i.Status == parsed).ToList();
+         }
+
+-        return Ok(invoices);
++        // The list view only needs the columns it displays.
++        return Ok(invoices
++            .Select(i => new InvoiceSummary(i.Id, i.CustomerName, i.Amount, i.Status, i.CreatedAt))
++            .ToList());
+     }
+
+     [HttpGet("{id}")]

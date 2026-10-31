@@ -1,0 +1,13 @@
+case,label,defect_summary,labelled_by,status
+case-01,defect,Bulk approve dereferences a null Ids list and applies approvals one by one with no handling of partial failure so a mid-batch error leaves earlier invoices approved and the caller with an error,AI-provisional,needs-human-confirmation
+case-02,defect,SQL injection from string-concatenated customer and status query parameters,AI-provisional,needs-human-confirmation
+case-03,defect,Rounding changed from AwayFromZero to ToZero and applied twice so discounted amounts silently change,AI-provisional,needs-human-confirmation
+case-04,clean,Pure rename of a private field with no behaviour change,AI-provisional,needs-human-confirmation
+case-05,defect,New delete endpoint has no RequireRole so any signed-in user can delete invoices while destructive actions are Admin only,AI-provisional,needs-human-confirmation
+case-06,clean,Adds three tests that match existing behaviour,AI-provisional,needs-human-confirmation
+case-07,defect,Logs the full invoice payload and the whole session object on every approval which can write session tokens and customer data to logs,AI-provisional,needs-human-confirmation
+case-08,defect,ConcurrentDictionary replaced by Dictionary in a singleton repository so concurrent requests can corrupt it and the contains-then-add check is racy,AI-provisional,needs-human-confirmation
+case-09,defect,CONTESTED. README now claims that sign out and sign in resets sample data and that accounts live in the in-memory store. AuthController.Logout only removes the session and demo users come from configuration so the claim is false. Workshop intent may be clean. Human decides and re-labels,AI-provisional,needs-human-decision
+case-10,defect,Catch-all returns 200 OK with status completed for any unexpected exception which hides failures from callers,AI-provisional,needs-human-confirmation
+case-11,defect,List endpoint now returns a summary without DecidedBy DecidedAt and DecisionNote so the rejection reason and decider are no longer visible to admins reviewing later,human-supplied,needs-human-confirmation
+case-12,clean,Adds draft-only discard in the Domain with Admin-only endpoint reusing Handle and tests for both paths,human-supplied,needs-human-confirmation

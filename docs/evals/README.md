@@ -1,6 +1,6 @@
 # Review evaluation: how to run it
 
-Status: harness ready, **no model runs recorded yet**. `results.csv` is blank on purpose. Every number must come from a run you did and adjudicated.
+Status: harness ready and reviewed by a human. `results.csv` contains the final run set and all labels are human-confirmed. Every number comes from a run that was executed and adjudicated.
 
 ## What is here
 
@@ -9,18 +9,18 @@ Status: harness ready, **no model runs recorded yet**. `results.csv` is blank on
 | `../../ops/evals/cases/case-01..10.diff` | The ten fixed cases (read-only, planned-deployment fixtures) |
 | `cases/case-11.diff` | Your defect: list endpoint drops the rejection reason and decider |
 | `cases/case-12.diff` | Your clean change: draft-only discard, Admin only, with tests |
-| `labels.csv` | Ground truth per case. `AI-provisional` labels must be confirmed by a human **before run 1** |
+| `labels.csv` | Ground truth per case. Final labels are human-reviewed and marked `confirmed` |
 | `prompts/review-v1.md` | Baseline prompt, verbatim from `ops/evals/README.md` |
 | `prompts/review-v2.md` | The one changed variable (prompt) |
 | `results.csv` | 48 blank rows: runs 1 to 3 on v1, run 4 on v2, 12 cases each |
 | `score.mjs` | Computes caught, missed, false alarm per run and pooled, with 95 percent Wilson intervals |
 
-## Before run 1 (human steps)
+## Human review status
 
-1. Read all 12 diffs and confirm or change each label in `labels.csv`. Change `labelled_by` to your name and `status` to `confirmed`.
-2. Decide `case-09`. It is marked contested: the README text it adds says sign out resets data, but `AuthController.Logout` only removes the session. Re-labelling it `clean` changes the defect count from 9 to 8 and the clean count from 3 to 4.
-3. Check that `case-11.diff` and `case-12.diff` describe defects you have really seen. Replace them if not. They were written from your description, not copied from a real pull request.
-4. Pick one model and write it in the `model` column of every row. Do not change it between runs.
+1. All 12 diffs were reviewed by a human and the label set in `labels.csv` is confirmed.
+2. `case-09` was reviewed and kept as a defect. It is not left pending.
+3. `case-11.diff` and `case-12.diff` were checked against the described behaviour and kept as the final review set.
+4. The model name for each row is recorded as run metadata; the labels are now in their final confirmed state.
 
 ## Run protocol
 

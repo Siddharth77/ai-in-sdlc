@@ -29,6 +29,25 @@ that decides whether anyone keeps using the reviewer.
 5. Change exactly one thing — the prompt, the model, or the context file —
    and run the set again.
 
+## One-time model rotation: Kimi K3 -> Grok -> Claude
+
+This is the model order for a single comparison pass on the same 10-case set:
+
+1. Kimi K3
+2. Grok
+3. Claude
+
+Use the same review prompt for all three model runs, on the same case diffs,
+with a fresh session for each case. Do not add extra context beyond the case
+file and the prompt. Record the model name in the `model` column of the CSV
+as `kimi-k3`, `grok`, and `claude`.
+
+This is a one-time model comparison, not a production-grade sample. It is
+useful for comparing model behavior on the same set, but it is not enough to
+make a final model choice. The repo does not include provider credentials or
+API access for these models, so this run must be executed by a person with the
+necessary environment variables or client access.
+
 ## The review prompt
 
 > Review this diff for defects. For each finding give the file, the line, what

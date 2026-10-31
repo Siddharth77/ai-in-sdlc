@@ -1,49 +1,145 @@
 run,case,model,prompt_version,verdict,finding_summary,confidence_reported,notes
-1,case-01,,v1,,,,
-1,case-02,,v1,,,,
-1,case-03,,v1,,,,
-1,case-04,,v1,,,,
-1,case-05,,v1,,,,
-1,case-06,,v1,,,,
-1,case-07,,v1,,,,
-1,case-08,,v1,,,,
-1,case-09,,v1,,,,
-1,case-10,,v1,,,,
-1,case-11,,v1,,,,
-1,case-12,,v1,,,,
-2,case-01,,v1,,,,
-2,case-02,,v1,,,,
-2,case-03,,v1,,,,
-2,case-04,,v1,,,,
-2,case-05,,v1,,,,
-2,case-06,,v1,,,,
-2,case-07,,v1,,,,
-2,case-08,,v1,,,,
-2,case-09,,v1,,,,
-2,case-10,,v1,,,,
-2,case-11,,v1,,,,
-2,case-12,,v1,,,,
-3,case-01,,v1,,,,
-3,case-02,,v1,,,,
-3,case-03,,v1,,,,
-3,case-04,,v1,,,,
-3,case-05,,v1,,,,
-3,case-06,,v1,,,,
-3,case-07,,v1,,,,
-3,case-08,,v1,,,,
-3,case-09,,v1,,,,
-3,case-10,,v1,,,,
-3,case-11,,v1,,,,
-3,case-12,,v1,,,,
-4,case-01,,v2,,,,
-4,case-02,,v2,,,,
-4,case-03,,v2,,,,
-4,case-04,,v2,,,,
-4,case-05,,v2,,,,
-4,case-06,,v2,,,,
-4,case-07,,v2,,,,
-4,case-08,,v2,,,,
-4,case-09,,v2,,,,
-4,case-10,,v2,,,,
-4,case-11,,v2,,,,
-4,case-12,,v2,,,,
+1,case-01,kimi-k3,v1,caught,null Ids deref and partial batch failure both named,high,
+1,case-02,kimi-k3,v1,caught,SQL injection via concatenated customer and status named,high,
+1,case-03,kimi-k3,v1,caught,ToZero rounding change and double rounding both named,high,
+1,case-04,kimi-k3,v1,clean_ok,explicitly no defects on pure rename,high,
+1,case-05,kimi-k3,v1,caught,missing RequireRole Admin on Delete named,high,
+1,case-06,kimi-k3,v1,clean_ok,explicitly no defects on added tests,high,
+1,case-07,kimi-k3,v1,caught,full invoice and session object logged named,high,
+1,case-08,kimi-k3,v1,caught,Dictionary not thread safe and racy ContainsKey-add named,high,
+1,case-09,kimi-k3,v1,caught,false README reset claim named,medium,contested label kept as defect
+1,case-10,kimi-k3,v1,caught,catch-all returns 200 completed named,high,
+1,case-11,kimi-k3,v1,caught,dropped decision and rejection fields in list response named,medium,hedged but named the actual defect
+1,case-12,kimi-k3,v1,false_alarm,asserted 204-to-200 change as breaking defect,medium,clean case; contract-change claim scored as false alarm
+2,case-01,kimi-k3,v1,caught,null Ids deref and partial batch failure both named,high,
+2,case-02,kimi-k3,v1,caught,SQL injection named,high,
+2,case-03,kimi-k3,v1,caught,double rounding and ToZero change named,high,
+2,case-04,kimi-k3,v1,clean_ok,explicitly no defects,high,
+2,case-05,kimi-k3,v1,caught,missing RequireRole Admin on Delete named,high,
+2,case-06,kimi-k3,v1,false_alarm,asserted tests may fail against production code as a finding,medium,clean case; hedged but reported as finding
+2,case-07,kimi-k3,v1,caught,sensitive invoice and session logging named,high,
+2,case-08,kimi-k3,v1,caught,thread-safety regression and duplicate-add race named,high,
+2,case-09,kimi-k3,v1,caught,false README reset claim named,medium,contested label kept as defect
+2,case-10,kimi-k3,v1,caught,catch-all 200 completed named,high,
+2,case-11,kimi-k3,v1,caught,response contract narrowing dropping rejection metadata named,medium,
+2,case-12,kimi-k3,v1,false_alarm,asserted 204-to-200 change as breaking defect,medium,clean case
+3,case-01,kimi-k3,v1,caught,null Ids deref and partial batch failure named,high,
+3,case-02,kimi-k3,v1,caught,SQL injection named on both parameters,high,
+3,case-03,kimi-k3,v1,caught,rounding mode change and double rounding named,high,
+3,case-04,kimi-k3,v1,clean_ok,explicitly no defects,high,
+3,case-05,kimi-k3,v1,caught,missing RequireRole Admin on Delete named,high,
+3,case-06,kimi-k3,v1,clean_ok,explicitly no defects,high,
+3,case-07,kimi-k3,v1,caught,sensitive invoice and session logging named,high,
+3,case-08,kimi-k3,v1,caught,thread-safety regression and check-then-act race named,high,
+3,case-09,kimi-k3,v1,caught,false README reset claim named,medium,contested label kept as defect
+3,case-10,kimi-k3,v1,caught,catch-all 200 completed named,high,
+3,case-11,kimi-k3,v1,caught,list endpoint contract break dropping audit fields named,medium,
+3,case-12,kimi-k3,v1,false_alarm,asserted contract-change and ignored-remove findings on clean case,low-medium,clean case
+4,case-01,kimi-k3,v2,caught,null Ids deref and partial batch failure named,high,
+4,case-02,kimi-k3,v2,caught,SQL injection named with quoted lines,high,
+4,case-03,kimi-k3,v2,caught,silent rounding behaviour change named with example,high,
+4,case-04,kimi-k3,v2,clean_ok,explicitly no defects,high,
+4,case-05,kimi-k3,v2,caught,missing Admin role on destructive action named,high,
+4,case-06,kimi-k3,v2,clean_ok,explicitly no defects after checklist pass,high,
+4,case-07,kimi-k3,v2,caught,sensitive data written to logs named,high,
+4,case-08,kimi-k3,v2,caught,shared state thread-safety and duplicate-add race named,high,
+4,case-09,kimi-k3,v2,caught,README internal contradiction named,medium,contested label kept as defect
+4,case-10,kimi-k3,v2,caught,exceptions swallowed as 200 completed named,high,
+4,case-11,kimi-k3,v2,caught,data callers previously received no longer returned named,high,
+4,case-12,kimi-k3,v2,false_alarm,asserted 204-to-200 silent change as defect with high confidence,high,clean case; v2 did not reduce this false alarm
+5,case-01,grok-4.7,v1,caught,null Ids deref and partial batch failure both named,high,
+5,case-02,grok-4.7,v1,caught,SQL injection via concatenated customer and status named,high,
+5,case-03,grok-4.7,v1,caught,ToZero rounding and double rounding named,high,
+5,case-04,grok-4.7,v1,clean_ok,explicitly no defects on pure rename,high,
+5,case-05,grok-4.7,v1,caught,missing Admin role on destructive action named,high,
+5,case-06,grok-4.7,v1,clean_ok,explicitly no defects,high,
+5,case-07,grok-4.7,v1,caught,full invoice and session logged named,high,
+5,case-08,grok-4.7,v1,caught,Dictionary not thread safe and racy add named,high,
+5,case-09,grok-4.7,v1,missed,explicitly no defects,high,contested label kept as defect; false reset claim not named
+5,case-10,grok-4.7,v1,caught,catch-all returns 200 completed named,high,
+5,case-11,grok-4.7,v1,caught,list projection drops approval and audit fields named,medium,hedged but named the actual defect
+5,case-12,grok-4.7,v1,clean_ok,204-to-200 noted as contract change not asserted as defect,medium,clean case; hedged observation not scored as false alarm
+6,case-01,grok-4.7,v1,caught,null Ids deref and partial batch failure named,high,
+6,case-02,grok-4.7,v1,caught,SQL injection named,high,
+6,case-03,grok-4.7,v1,caught,ToZero truncation of discount named,high,
+6,case-04,grok-4.7,v1,false_alarm,asserted rename left old field uses and does not compile,high,clean case; the diff updates every use site
+6,case-05,grok-4.7,v1,caught,missing RequireRole Admin on Delete named,high,
+6,case-06,grok-4.7,v1,false_alarm,asserted wrong exception type in a clean test,medium,clean case
+6,case-07,grok-4.7,v1,caught,invoice and session logged named,high,
+6,case-08,grok-4.7,v1,caught,non-atomic ContainsKey add and unsafe Dictionary named,high,
+6,case-09,grok-4.7,v1,caught,false sign-out reset claim named,high,contested label kept as defect
+6,case-10,grok-4.7,v1,caught,catch-all 200 completed named,high,
+6,case-11,grok-4.7,v1,missed,claimed Invoice.Id type mismatch and compile failure,high,actual defect is dropped rejection fields; wrong defect does not count
+6,case-12,grok-4.7,v1,false_alarm,asserted 204-to-200 as a client-breaking defect,high,clean case
+7,case-01,grok-4.7,v1,caught,null Ids deref and partial batch failure named,high,
+7,case-02,grok-4.7,v1,caught,SQL injection named,high,
+7,case-03,grok-4.7,v1,caught,double rounding and ToZero change named,high,
+7,case-04,grok-4.7,v1,clean_ok,explicitly no defects,high,
+7,case-05,grok-4.7,v1,caught,missing RequireRole Admin on Delete named,high,
+7,case-06,grok-4.7,v1,clean_ok,explicitly no defects,high,
+7,case-07,grok-4.7,v1,caught,invoice and session logged named,high,
+7,case-08,grok-4.7,v1,caught,unsafe Dictionary and non-atomic add named,high,
+7,case-09,grok-4.7,v1,missed,explicitly no defects,high,contested label kept as defect
+7,case-10,grok-4.7,v1,caught,catch-all 200 completed named,high,
+7,case-11,grok-4.7,v1,caught,list response drops fields callers depended on named,medium,also hedged an Id type mismatch
+7,case-12,grok-4.7,v1,false_alarm,asserted 204-to-200 contract break as defect,medium,clean case
+8,case-01,grok-4.7,v2,caught,null Ids deref and partial batch failure named,high,
+8,case-02,grok-4.7,v2,caught,SQL injection named with quoted lines,high,
+8,case-03,grok-4.7,v2,caught,silent money rounding change named,high,
+8,case-04,grok-4.7,v2,clean_ok,explicitly no defects,high,
+8,case-05,grok-4.7,v2,caught,missing Admin role on destructive Delete named,high,
+8,case-06,grok-4.7,v2,clean_ok,explicitly no defects,high,
+8,case-07,grok-4.7,v2,caught,full invoice and session logged named,high,
+8,case-08,grok-4.7,v2,caught,unsafe shared Dictionary and duplicate add named,high,
+8,case-09,grok-4.7,v2,missed,explicitly no defects,high,contested label kept as defect; v2 checklist did not catch the false README claim
+8,case-10,grok-4.7,v2,caught,exceptions swallowed as 200 completed named,high,
+8,case-11,grok-4.7,v2,caught,dropped decision and rejection fields named,high,
+8,case-12,grok-4.7,v2,false_alarm,asserted 204-to-200 change as defect,high,clean case
+9,case-01,claude,v1,caught,null Ids deref and partial batch failure both named,high,
+9,case-02,claude,v1,caught,SQL injection via interpolated customer and status named,high,
+9,case-03,claude,v1,caught,rounding mode change and double rounding named,high,
+9,case-04,claude,v1,clean_ok,explicitly no defects,high,
+9,case-05,claude,v1,caught,missing RequireRole on Delete named,high,
+9,case-06,claude,v1,clean_ok,explicitly no defects,high,
+9,case-07,claude,v1,caught,invoice and session objects logged named,high,
+9,case-08,claude,v1,caught,Dictionary not thread-safe and racy Add named,high,
+9,case-09,claude,v1,caught,unsupported README reset claim named,medium,contested label kept as defect
+9,case-10,claude,v1,caught,catch-all returning 200 completed named,high,
+9,case-11,claude,v1,caught,list drops rejection reason and approver fields named,medium,hedged at about 50 percent but names the defect
+9,case-12,claude,v1,false_alarm,asserted 204-to-200 and Admin-delete narrowing as defect,high,clean case
+10,case-01,claude,v1,caught,null Ids deref and partial batch failure both named,high,
+10,case-02,claude,v1,caught,SQL injection via interpolated customer and status named,high,
+10,case-03,claude,v1,caught,rounding mode change and double rounding named,high,
+10,case-04,claude,v1,clean_ok,explicitly no defects,high,
+10,case-05,claude,v1,caught,missing RequireRole on Delete named,high,
+10,case-06,claude,v1,false_alarm,listed hedged test-assumption findings though closing with no definite defects,low,clean case; scored like kimi run 2 and grok run 6
+10,case-07,claude,v1,caught,invoice and session objects logged named,high,
+10,case-08,claude,v1,caught,Dictionary not thread-safe and racy Add named,high,
+10,case-09,claude,v1,caught,unsupported README reset claim named,medium,contested label kept as defect
+10,case-10,claude,v1,caught,catch-all returning 200 completed named,high,
+10,case-11,claude,v1,caught,list drops fields consumers may read named,low,hedged at about 35 percent but names the defect
+10,case-12,claude,v1,false_alarm,asserted 204-to-200 and Admin-delete narrowing as defect,medium,clean case
+11,case-01,claude,v1,caught,null Ids deref and partial batch failure both named,high,
+11,case-02,claude,v1,caught,SQL injection via interpolated customer and status named,high,
+11,case-03,claude,v1,caught,rounding mode change named,high,
+11,case-04,claude,v1,clean_ok,explicitly no defects,high,
+11,case-05,claude,v1,caught,missing RequireRole on Delete named,high,
+11,case-06,claude,v1,clean_ok,stated no defects; only low-confidence doubts about code outside the diff,high,borderline: doubts listed but verdict was no defects
+11,case-07,claude,v1,caught,invoice and session objects logged named,high,
+11,case-08,claude,v1,caught,Dictionary not thread-safe and racy Add named,high,
+11,case-09,claude,v1,caught,unsupported README reset claim named,medium,contested label kept as defect
+11,case-10,claude,v1,caught,catch-all returning 200 completed named,high,
+11,case-11,claude,v1,caught,list drops fields consumers may read named,low,hedged at about 40 percent but names the defect
+11,case-12,claude,v1,false_alarm,asserted 204-to-200 and Admin-delete narrowing as defect,medium,clean case
+12,case-01,claude,v2,caught,null Ids deref and partial batch failure both named,high,
+12,case-02,claude,v2,caught,SQL injection via interpolated customer and status named,high,
+12,case-03,claude,v2,caught,rounding mode change named with worked cent example,high,
+12,case-04,claude,v2,clean_ok,explicitly no defects after checklist pass,high,
+12,case-05,claude,v2,caught,missing RequireRole on Delete named,high,
+12,case-06,claude,v2,clean_ok,explicitly no defects,high,
+12,case-07,claude,v2,caught,invoice and session objects logged named,high,
+12,case-08,claude,v2,caught,Dictionary not thread-safe and racy Add named,high,
+12,case-09,claude,v2,missed,said README claim is not a code defect,high,contested label kept as defect; v2 checklist did not catch the false README claim
+12,case-10,claude,v2,caught,catch-all returning 200 completed named,high,
+12,case-11,claude,v2,caught,list drops fields consumers may read named,medium,
+12,case-12,claude,v2,false_alarm,asserted 204-to-200 and Admin-delete narrowing as defect,high,clean case

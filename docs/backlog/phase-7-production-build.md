@@ -65,11 +65,12 @@ Status: **Blocked** until the exactly-once ADR (P2-S5) and risk decision (P5-S3)
 - Human gate: [ ] On-call engineer reads it — name/date:
 
 ### P7-S7 — Add architecture test to CI
-- Status: Blocked
+- Status: Done
 - Source: P1-S6, `.github/workflows/ci.yml`
 - Agent: `backend-implementer`
 - Depends on: P1-S6
 - Acceptance criteria:
-  - [ ] CI runs `dotnet test backend/InvoiceApp.sln`, including the architecture test.
-  - [ ] Workflow change reviewed by a human (hook asks before editing workflows).
-- Human gate: [ ] Human reviews the workflow diff — name/date:
+  - [x] CI runs `dotnet test backend/InvoiceApp.sln`, including the architecture test. (`ci.yml` line 18 runs the whole solution with no filter, so `DomainDependencyRuleTests` is included. Checked by reading the file on 2026-11-01. Not checked in a CI run log.)
+  - [x] Workflow change reviewed by a human. (No workflow change was needed: `ci.yml` is unchanged since the first commit on 2026-10-05, so there is no diff to review.)
+- Human gate: [x] Human reviews the workflow diff — not applicable, no diff. Marked Done on Siddharth Jain's instruction, 2026-11-01 (stated in chat).
+- Evidence: `.github/workflows/ci.yml`; `dotnet test backend/InvoiceApp.sln` gave 9 of 9 on 2026-11-01

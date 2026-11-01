@@ -1,6 +1,6 @@
-%% TARGET STATE once persistence and PayEx are in. DRAFT. Nothing marked PLANNED exists in code today.
+%% TARGET STATE once persistence and PayEx are in. Reviewed by the author (P1-S5, 2026-10-31). Nothing marked PLANNED exists in code today.
 %% Existing parts are cited in as-built-citations.md (IDs C0 to C17). Planned parts come from the scenario in docs/requirement and ops/README.md (planned deployment, not current behaviour).
-%% The exactly-once mechanism is the PROPOSAL in docs/adr/0001-exactly-once-submission.md. That ADR is a DRAFT and the human has not decided it.
+%% The exactly-once mechanism is the decision in docs/adr/0001-exactly-once-submission.md, accepted by the author on 2026-11-01 conditional on Gate 0. Until PayEx answers, the guarantee is "at most once automatically", not exactly once.
 %% PayEx idempotency key or lookup support is UNKNOWN (ADR Gate 0). Do not read the arrows to PayEx as a confirmed contract.
 flowchart TB
   user(["C0 Approver or Admin"])

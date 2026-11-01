@@ -1,0 +1,9 @@
+{
+  "servers": {
+    "mermaid": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "mcp-mermaid@0.4.1"]
+    }
+  }
+}

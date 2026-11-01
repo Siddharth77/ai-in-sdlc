@@ -22,6 +22,14 @@ Invoice approval demo app: ASP.NET Core 8 Web API with a small static web UI.
 - Use clear names; no one-letter variables or `flag` parameters.
 - End-to-end tests use page objects and role-based locators (`getByRole`, `getByLabel`), never CSS or XPath selectors.
 
+## Agent workflow and human gates
+
+- Work comes from `docs/backlog/` (phases 0-7, stories start as `To Do`). One story at a time; only a human marks `Done`.
+- Custom agents: `.github/agents/` (`sdlc-orchestrator` plus subagents). File rules: `.github/instructions/`. Enforced guards: `.github/hooks/`.
+- Ask a human before commit, push, installs, config, auth, Domain or CI changes. Hooks enforce this.
+- Decision records, the autonomy policy and "Where the agent was wrong or useless" are human-authored.
+- Log AI use in `docs/ai-logs/`. Never report a result you did not run.
+
 ## Commands
 
 - Run the app: `dotnet run --project backend/src/InvoiceApp.Api` then open http://localhost:5000

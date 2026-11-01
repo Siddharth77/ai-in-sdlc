@@ -1,0 +1,13 @@
+case,label,defect_summary,labelled_by,status
+case-01,defect,Bulk approve dereferences a null Ids list and applies approvals one by one with no handling of partial failure so a mid-batch error leaves earlier invoices approved and the caller with an error,Siddharth Jain,confirmed
+case-02,defect,SQL injection from string-concatenated customer and status query parameters,Siddharth Jain,confirmed
+case-03,defect,Rounding changed from AwayFromZero to ToZero and applied twice so discounted amounts silently change,Siddharth Jain,confirmed
+case-04,clean,Pure rename of a private field with no behaviour change,Siddharth Jain,confirmed
+case-05,defect,New delete endpoint has no RequireRole so any signed-in user can delete invoices while destructive actions are Admin only,Siddharth Jain,confirmed
+case-06,clean,Adds three tests that match existing behaviour,Siddharth Jain,confirmed
+case-07,defect,Logs the full invoice payload and the whole session object on every approval which can write session tokens and customer data to logs,Siddharth Jain,confirmed
+case-08,defect,ConcurrentDictionary replaced by Dictionary in a singleton repository so concurrent requests can corrupt it and the contains-then-add check is racy,Siddharth Jain,confirmed
+case-09,defect,README now claims that sign out and sign in resets sample data and that accounts live in the in-memory store. AuthController.Logout only removes the session and demo users come from configuration so the claim is false. Human review confirmed the defect label,Siddharth Jain,confirmed
+case-10,defect,Catch-all returns 200 OK with status completed for any unexpected exception which hides failures from callers,Siddharth Jain,confirmed
+case-11,defect,List endpoint now returns a summary without DecidedBy DecidedAt and DecisionNote so the rejection reason and decider are no longer visible to admins reviewing later,Siddharth Jain,confirmed
+case-12,clean,Adds draft-only discard in the Domain with Admin-only endpoint reusing Handle and tests for both paths,Siddharth Jain,confirmed

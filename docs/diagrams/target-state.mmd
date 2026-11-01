@@ -1,0 +1,51 @@
+%% TARGET STATE once persistence and PayEx are in. Reviewed by the author (P1-S5, 2026-10-31). Nothing marked PLANNED exists in code today.
+%% Existing parts are cited in as-built-citations.md (IDs C0 to C17). Planned parts come from the scenario in docs/requirement and ops/README.md (planned deployment, not current behaviour).
+%% The exactly-once mechanism is the decision in docs/adr/0001-exactly-once-submission.md, accepted by the author on 2026-11-01 conditional on Gate 0. Until PayEx answers, the guarantee is "at most once automatically", not exactly once.
+%% PayEx idempotency key or lookup support is UNKNOWN (ADR Gate 0). Do not read the arrows to PayEx as a confirmed contract.
+flowchart TB
+  user(["C0 Approver or Admin"])
+
+  subgraph azure["Azure App Service - ASP.NET Core 8 (hosting is PLANNED)"]
+    api["EXISTS: InvoiceApp.Api<br/>controllers, SessionAuthMiddleware (C4, C7-C9)"]
+    svc["EXISTS: ApprovalService (C13)<br/>PLANNED change: approval and submission row in one transaction"]
+    port["EXISTS: IInvoiceRepository (C14)"]
+    mem["EXISTS today, to be replaced: InMemoryInvoiceRepository (C12)"]
+    sqlrepo["PLANNED: SQL repository<br/>implements IInvoiceRepository"]
+    worker["PLANNED: submission worker<br/>claims Pending rows, calls PayEx"]
+    payclient["PLANNED: PayEx client<br/>30 s timeout"]
+    recon["PLANNED: nightly reconciliation<br/>drift detector, not the mechanism<br/>needs PayEx lookup: UNKNOWN"]
+  end
+
+  subgraph data["Azure SQL (PLANNED)"]
+    invtable[("PLANNED: invoices")]
+    subtable[("PLANNED: submission table<br/>unique idempotency key<br/>Pending, Submitting, Submitted, Failed, Unknown")]
+    audit[("PLANNED: approval audit log<br/>kept 7 years, SOC 2 Type II")]
+  end
+
+  bus{{"PROVISIONED, UNUSED: Azure Service Bus<br/>nothing in code uses it<br/>not in the first design"}}
+  payex[/"EXTERNAL: PayEx<br/>returns a reference on success<br/>30 s timeout does NOT reliably mean failure<br/>idempotency key or lookup: UNKNOWN"/]
+
+  user --> api
+  api --> svc
+  svc --> port
+  mem -.->|"today"| port
+  sqlrepo -.->|"will implement"| port
+  sqlrepo -->|"one transaction"| data
+  worker --> data
+  recon --> data
+  worker --> payclient
+  payclient -->|"submit with key"| payex
+  payex ~~~ data
+  bus -.->|"optional later"| worker
+
+  classDef exists fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#000
+  classDef planned fill:#fff3e0,stroke:#ef6c00,stroke-width:2px,stroke-dasharray: 6 4,color:#000
+  classDef unused fill:#eeeeee,stroke:#757575,stroke-width:2px,stroke-dasharray: 2 4,color:#000
+  classDef external fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,stroke-dasharray: 6 4,color:#000
+  class api,svc,port,mem exists
+  class sqlrepo,worker,payclient,recon,invtable,subtable,audit planned
+  class bus unused
+  class payex external
+
+  style azure fill:#fafafa,stroke:#999,color:#000
+  style data fill:#fafafa,stroke:#999,color:#000

@@ -25,7 +25,7 @@ content into reading private data and sending it out.
   agent-setup description. The file ends with the sections "A note on the
   scenario" and "No answers here" (read in full on 2026-10-31). Per backlog
   P5-S1, the missing description is not invented here.
-- **Assumption (needs human confirmation):** the setup audited below is the
+- **Assumption (confirmed by Siddharth Jain on 2026-10-31, P5-S1 gate):** the setup audited below is the
   agent setup that actually exists and is citable in this repository:
   - `.github/agents/`: `sdlc-orchestrator` plus subagents `backlog-planner`,
     `architecture-mapper`, `backend-implementer`, `test-author`,
@@ -180,7 +180,9 @@ Decision owner: Siddharth Jain  Date: 2026-10-31  (P5-S3 gate; Option A chosen 2
 
 - Done: "Where the agent was wrong or useless" reviewed and accepted by
   Siddharth Jain, 2026-10-31.
-- Confirm or replace the audited-setup assumption above (P5-S1 gate).
+- Done: the audited-setup assumption was confirmed by Siddharth Jain on
+  2026-10-31 (P5-S1 gate). It was not checked against a facilitator document,
+  because none was available.
 - Option A chosen by Siddharth Jain on 2026-10-31 (P5-S3) and applied in the
   hook on 2026-11-01 (17 of 17 smoke tests). Remaining: switch off the five MCP
   write tools in the editor's tool picker (outside this repo), then watch the

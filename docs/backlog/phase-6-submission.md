@@ -8,20 +8,20 @@
 - Acceptance criteria:
   - [x] Checklist maps hand-in items 1-9 to file paths. (Item 8 is a labelled placeholder for the video link.)
   - [x] Every path exists; test command from item 2 runs. (Re-run 2026-11-01: 2 of 2.)
-- Human gate: [x] Human ticks each item — Siddharth Jain, 2026-11-01 (stated in chat), with item 8 still pending under P6-S2
+- Human gate: [x] Human ticks each item — Siddharth Jain, 2026-11-01 (stated in chat), including the recorded and linked video under P6-S2
 - Evidence: `submission/README.md` (index of the nine items, with links and verify commands)
 
 ### P6-S2 — Record the demo video
-- Status: To Do
+- Status: Done
 - Source: Requirement "The demo video" (8 to 10 minutes, MP4 or Teams)
 - Agent: none
 - Depends on: P6-S1
 - Acceptance criteria:
-  - [ ] Duration between 8 and 10 minutes.
-  - [ ] Shows the architecture test running, the ADR, the eval results and the baseline commands.
-  - [ ] Uploaded and the link is in the checklist.
-- Human gate: [ ] Human plays it back end to end — name/date:
-- Evidence: video link. Open: the video is not recorded yet. A placeholder and shot list are at the top and bottom of `submission/README.md`.
+  - [x] Duration between 8 and 10 minutes.
+  - [x] Shows the architecture test running, the ADR, the eval results and the baseline commands.
+  - [x] Uploaded and the link is in the checklist.
+- Human gate: [x] Human plays it back end to end — Siddharth Jain, 2026-11-01 (stated in chat)
+- Evidence: video link in `submission/README.md`.
 
 ### P6-S3 — Export AI augmentation logs
 - Status: Done

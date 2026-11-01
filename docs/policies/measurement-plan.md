@@ -69,11 +69,11 @@ Commands: `node docs/measurement/capture-baseline.mjs` and `gh run list --limit 
 | Number | 2026-10-31 | 2026-11-01 |
 | --- | --- | --- |
 | Fixture CI (20 runs): median, failures | 1,875.5 s, 2 of 20 | 1,875.5 s, 2 of 20 (identical: the fixture does not change) |
-| Real CI runs | 1 (run 41227216780, success, 17 s) | 2, both success, both on `pull_request`: 41227216780 (17 s) and 41228762027 (23 s, 18:18:31Z to 18:18:54Z) |
+| Real CI runs | 1 (run 41227216780, success, 17 s) | 5, all success, all on `pull_request`: 41274155952 (22 s), 41273631326 (30 s), 41234200739 (32 s), 41228762027 (23 s), 41227216780 (17 s) |
 | Commits on the checked-out branch | 13 | 15 (grows with work; `main` is still 6) |
 | Deployments, reviews, tags | 0, 0, 0 | not re-queried |
 
-With n = 2 and no failures, no rate or percentile is meaningful. Today's edits are not committed, so they have not started another CI run; the commit and push will add one.
+With n = 5 and no failures, no rate or percentile is meaningful. This is still a small sample, and the live run data remains a lead-time proxy rather than a production reliability statement.
 
 ## Reproduce the no-data findings
 
